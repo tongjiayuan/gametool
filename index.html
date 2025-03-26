@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Helper</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        html {
+            color: #d1d1d3;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding-top: 30px;
+            margin: 0;
+            background-image: url(assets/background.png);
+            background-repeat: repeat-y;
+            background-size: cover;
+        }
+        .player {
+            text-align: center;
+        }
+        button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .font-big {
+            font-size: 20px;
+        }
+        .mb-60 {
+            margin-bottom: 20px;
+        }
+        .mb-20 {
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 80px;
+            margin: 5px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #countdown {
+            font-size: 50px;
+            margin-top: 10px;
+        }
+        .role-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .role-button {
+            padding: 10px;
+        }
+        .font-middle {
+            font-size: 20px;
+        }
+        #playButton {
+            font-size: 30px;
+        }
+        #startButton {
+            margin-top: 20px;
+            font-size: 30px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="player">
+        <button class="font-big mb-60" id="playButton">播放背景音乐</button>
+        <audio id="audioPlayer" src="assets/audio.mp3" loop style="display:none;"></audio>
+        <div class="role-buttons mb-30">
+            <label for="role" class="font-middle mb-30">选择当前角色:</label>
+            <button id="normalRole" class="role-button font-big">普通角色</button>
+            <button id="sheriffRole" class="role-button font-big">警长</button>
+        </div>
+        <div id="timeInputs mb-30">
+            <div id="normalTimeDiv">
+                <label for="normalTime" class="font-middle">普通角色倒计时时间(秒):</label>
+                <input type="number" id="normalTime" min="1" class="font-big">
+            </div>
+            <div id="sheriffTimeDiv">
+                <label for="sheriffTime" class="font-middle">警长倒计时时间(秒):</label>
+                <input type="number" id="sheriffTime" min="1" class="font-big">
+            </div>
+        </div>
+        <br>
+        <button id="startButton" class="font-big">开始倒计时</button>
+        <div id="countdown" class="font-big"></div>
+    </div>
+ 
+    <script>
+        document.getElementById('playButton').addEventListener('click', function() {
+            const audioPlayer = document.getElementById('audioPlayer');
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                this.textContent = '暂停音乐';
+            } else {
+                audioPlayer.pause();
+                this.textContent = '播放音乐';
+            }
+        });
+        let countdownInterval;
+        let remainingTime;
+        let selectedRole = 'normal';
+        let savedTimes = {
+            normal: 60,
+            sheriff: 90
+        };
+        // 数据初始化
+        let currentTime = 60;
+        const inputIds = ['normalTimeDiv', 'sheriffTimeDiv'];
+        document.getElementById('sheriffTimeDiv').style.display = 'none';
+        document.getElementById(`${selectedRole}Time`).value = savedTimes[selectedRole];
+        document.getElementById('normalRole').style.backgroundColor = '#d4edda'; // 标记当前按钮为选中状态
+ 
+        // 角色按钮点击事件
+        document.querySelectorAll('.role-button').forEach(button => {
+            button.addEventListener('click', function() {
+                selectedRole = this.id.split('Role')[0].toLowerCase(); // 获取角色名（normal或sheriff）
+                document.querySelectorAll('.role-button').forEach(b => b.style.backgroundColor = ''); // 重置所有按钮背景色
+                this.style.backgroundColor = '#d4edda'; // 标记当前按钮为选中状态
+ 
+                inputIds.forEach(id => {
+                    const input = document.getElementById(id);
+                    input.style.display = (id.startsWith(selectedRole) ? 'inline-block' : 'none');
+                });
+ 
+                // 如果已经保存了该角色的时间，则自动填充到输入框中
+                if (savedTimes[selectedRole]) {
+                    document.getElementById(`${selectedRole}Time`).value = savedTimes[selectedRole];
+                }
+            });
+        });
+        function startTime() {
+            const timeInput = document.getElementById(`${selectedRole}Time`).value;
+            
+            if (timeInput && !isNaN(timeInput) && timeInput > 0) {
+                // 保存输入的时间
+                savedTimes[selectedRole] = parseInt(timeInput, 10);
+                remainingTime = savedTimes[selectedRole];
+                document.getElementById('countdown').textContent = `${remainingTime} 秒`;
+ 
+                // 重置并启动倒计时
+                clearInterval(countdownInterval); // 防止多次点击导致的多个倒计时
+                countdownInterval = setInterval(() => {
+                    remainingTime--;
+                    document.getElementById('countdown').textContent = `${remainingTime} 秒`;
+ 
+                    if (remainingTime <= 0) {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
+            } else {
+                alert('请输入一个有效的倒计时时间！');
+            }
+        }
+ 
+        // 开始倒计时按钮事件
+        document.getElementById('startButton').addEventListener('click', startTime);
+    </script>
+</body>
+</html>
