@@ -12,13 +12,11 @@
         body {
             display: flex;
             justify-content: center;
-            background-color: #f0f0f0;
+            background-color: #1a1a1a;
             font-family: Arial, sans-serif;
             padding-top: 30px;
             margin: 0;
-            background-color: #000;
-            background-repeat: repeat-y;
-            background-size: cover;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         }
         .player {
             text-align: center;
@@ -72,9 +70,44 @@
             font-size: 30px;
             background-color: orange;
         }
+        /* 加载指示器样式 */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            flex-direction: column;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid orange;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <!-- 加载指示器 -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <div>资源加载中，请稍候...</div>
+        <div id="loadingProgress">0%</div>
+    </div>
+
     <div class="player">
         <button class="font-big mb-60" id="playButton">播放背景音乐</button>
         <audio id="audioPlayer" src="assets/audio.mp3" loop style="display:none;"></audio>
@@ -167,6 +200,40 @@
  
         // 开始倒计时按钮事件
         document.getElementById('startButton').addEventListener('click', startTime);
+
+        // 资源加载
+        window.addEventListener('DOMContentLoaded', function() {
+            let totalResources = 1; // 只有音频需要加载
+            let loadedResources = 0;
+            
+            function updateProgress() {
+                loadedResources++;
+                let percentage = Math.round((loadedResources / totalResources) * 100);
+                document.getElementById('loadingProgress').textContent = percentage + '%';
+                
+                if (loadedResources >= totalResources) {
+                    // 所有资源加载完成
+                    setTimeout(() => {
+                        document.getElementById('loading').style.display = 'none';
+                    }, 500);
+                }
+            }
+            
+            // 预加载音频
+            const audio = document.getElementById('audioPlayer');
+            audio.addEventListener('canplaythrough', function() {
+                updateProgress();
+            }, {once: true});
+            audio.addEventListener('error', function() {
+                console.error('音频加载失败');
+                updateProgress(); // 继续更新进度，避免卡住
+            }, {once: true});
+            
+            // 5秒后如果还没加载完，也显示界面
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 5000);
+        });
     </script>
 </body>
 </html>
