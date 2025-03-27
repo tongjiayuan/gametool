@@ -30,6 +30,7 @@
             padding: 5px 10px;
             font-size: 16px;
             cursor: pointer;
+            border: none;
         }
         .font-big {
             font-size: 20px;
@@ -69,11 +70,11 @@
             font-size: 20px;
         }
         #playButton {
-            font-size: 30px;
+            font-size: 26px;
         }
         #startButton {
             margin-top: 20px;
-            font-size: 30px;
+            font-size: 26px;
             background-color: orange;
         }
         /* 文本框容器样式 */
@@ -136,7 +137,6 @@
     </div>
 
     <div class="player">
-        <button class="font-big mb-60" id="playButton">播放背景音乐</button>
         <audio id="audioPlayer" src="assets/audio.mp3" loop style="display:none;"></audio>
         <div class="role-buttons mb-30">
             <label for="role" class="font-middle mb-30">选择当前角色:</label>
@@ -154,14 +154,18 @@
             </div>
         </div>
         <br>
-        <button id="startButton" class="font-big">开始倒计时</button>
+        <div>
+            <button class="font-big" id="playButton">播放</button>
+            <button id="startButton" class="font-big">开始倒计时</button>
+        </div>
+
         <div id="countdown" class="font-big"></div>
         
         <!-- 新增游戏记录文本框 -->
         <div class="notes-container">
             <textarea id="gameNotes">预言家、女巫、熊、守卫、狼王、狼美人、骑士
 
-刀、救、毒</textarea>
+刀、救、毒、守、魅</textarea>
         </div>
     </div>
  
@@ -170,10 +174,10 @@
             const audioPlayer = document.getElementById('audioPlayer');
             if (audioPlayer.paused) {
                 audioPlayer.play();
-                this.textContent = '暂停音乐';
+                this.textContent = '暂停';
             } else {
                 audioPlayer.pause();
-                this.textContent = '播放音乐';
+                this.textContent = '播放';
             }
         });
         let countdownInterval;
