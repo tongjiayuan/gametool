@@ -8,18 +8,23 @@
     <style>
         html {
             color: #d1d1d3;
+            height: 100%;
+            background-color: #000;
         }
         body {
             display: flex;
             justify-content: center;
-            background-color: #1a1a1a;
             font-family: Arial, sans-serif;
-            padding-top: 30px;
             margin: 0;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
         }
         .player {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
         }
         button {
             padding: 5px 10px;
@@ -47,6 +52,7 @@
         }
         #countdown {
             font-size: 50px;
+            height: 70px;
             margin-top: 10px;
         }
         .role-buttons {
@@ -69,6 +75,29 @@
             margin-top: 20px;
             font-size: 30px;
             background-color: orange;
+        }
+        /* 文本框容器样式 */
+        .notes-container {
+            flex: 1;
+            padding-top: 15px;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+        /* 文本框样式 */
+        #gameNotes {
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+            background-color: #1a1a1a;
+            color: #d1d1d3;
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            resize: none;
+            overflow-y: auto;
+            box-sizing: border-box;
         }
         /* 加载指示器样式 */
         #loading {
@@ -129,6 +158,13 @@
         <br>
         <button id="startButton" class="font-big">开始倒计时</button>
         <div id="countdown" class="font-big"></div>
+        
+        <!-- 新增游戏记录文本框 -->
+        <div class="notes-container">
+            <textarea id="gameNotes">预言家、女巫、熊、守卫、狼王、狼美人、骑士
+
+刀、救、毒</textarea>
+        </div>
     </div>
  
     <script>
@@ -200,6 +236,19 @@
  
         // 开始倒计时按钮事件
         document.getElementById('startButton').addEventListener('click', startTime);
+        
+        // // 调整文本框高度以适应窗口
+        // function adjustTextareaHeight() {
+        //     const windowHeight = window.innerHeight;
+        //     const textarea = document.getElementById('gameNotes');
+        //     const textareaTop = textarea.getBoundingClientRect().top;
+        //     const newHeight = windowHeight - textareaTop - 30; // 30px作为底部边距
+        //     textarea.style.height = Math.max(200, newHeight) + 'px';
+        // }
+        
+        // // 在DOM加载和窗口大小改变时调整文本框高度
+        // window.addEventListener('DOMContentLoaded', adjustTextareaHeight);
+        // window.addEventListener('resize', adjustTextareaHeight);
 
         // 资源加载
         window.addEventListener('DOMContentLoaded', function() {
