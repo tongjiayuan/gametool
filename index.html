@@ -24,79 +24,269 @@
             flex-direction: column;
             width: 100%;
             max-width: 600px;
-            padding: 15px;
+            padding: 10px;
         }
         button {
-            padding: 5px 10px;
-            font-size: 16px;
+            padding: 5px 8px;
+            font-size: 14px;
             cursor: pointer;
             border: none;
         }
         .font-big {
-            font-size: 20px;
+            font-size: 16px;
         }
         .mb-60 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .mb-20 {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         input[type="number"] {
-            width: 80px;
+            width: 60px;
             margin: 5px;
         }
         button {
             margin: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 8px 15px;
+            font-size: 14px;
             cursor: pointer;
         }
         #countdown {
-            font-size: 50px;
-            height: 70px;
-            margin-top: 10px;
+            font-size: 30px;
+            margin-top: 8px;
+        }
+        .role-control-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
         }
         .role-buttons {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 6px;
+            margin-right: 6px;
         }
         .role-button {
-            padding: 10px;
+            padding: 6px;
+            font-size: 14px;
         }
         .font-middle {
-            font-size: 20px;
+            font-size: 14px;
         }
         #playButton {
-            font-size: 26px;
+            font-size: 18px;
         }
         #startButton {
-            margin-top: 20px;
-            font-size: 26px;
+            font-size: 18px;
             background-color: orange;
         }
-        /* 文本框容器样式 */
-        .notes-container {
-            height: 150px;
-            padding-top: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-        /* 文本框样式 */
-        #gameNotes {
+        /* 游戏表格样式 */
+        .game-table-container {
+            margin-top: 10px;
             width: 100%;
-            height: 100%;
+        }
+        .game-table {
+            width: 100%;
+            border-collapse: collapse;
             background-color: #1a1a1a;
             color: #d1d1d3;
-            border: 1px solid #444;
-            padding: 15px;
             border-radius: 8px;
-            font-family: Arial, sans-serif;
-            resize: none;
+        }
+        .game-table thead th {
+            font-size: 10px;
+        }
+        .game-table th, .game-table td {
+            border: 1px solid #444;
+            padding:2px;
+            text-align: center;
+            font-size: 13px;
+        }
+        .game-table th {
+            background-color: #333;
+            font-weight: bold;
+        }
+        /* 调整表格列宽 */
+        .game-table th:nth-child(1) {
+            width: 10%;
+        }
+        .game-table th:nth-child(2) {
+            width: 25%;
+        }
+        .game-table th:nth-child(3) {
+            width: 15%;
+        }
+        .game-table th:nth-child(4) {
+            width: 50%;
+        }
+        .game-table select, .game-table input[type="text"] {
+            width: 90%;
+            background-color: #2a2a2a;
+            color: #d1d1d3;
+            border: 1px solid #444;
+            padding: 2px;
+            border-radius: 3px;
+        }
+        /* 下拉框样式调整 */
+        .game-table td {
+            position: relative;
+        }
+        /* 自定义下拉框样式 */
+        .custom-select-container {
+            position: relative;
+            width: 100%;
+            text-align: left;
+        }
+        .custom-select-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100% - 6px);
+            background-color: #2a2a2a;
+            color: #d1d1d3;
+            padding: 2px;
+            padding-left: 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            height: 20px;
+        }
+        .custom-select-trigger:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #d1d1d3;
+            margin-left: 6px;
+        }
+        .custom-options {
+            position: absolute;
+            display: none;
+            top: 100%;
+            left: -2px;
+            z-index: 999;
+            margin-top: 2px;
+            list-style: none;
+            padding: 0;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 0 0 3px 3px;
+            width: calc(100% + 2px);
+            max-height: 200px;
             overflow-y: auto;
-            box-sizing: border-box;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .custom-options.open {
+            display: block;
+        }
+        .custom-option {
+            padding: 2px;
+            padding-left: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .custom-option:hover {
+            background-color: #3a3a3a;
+        }
+        .custom-option.seer, .custom-option.bear, .custom-option.wu, .custom-option.shou, .custom-option.qishi {
+            color: #4CAF50; /* 深绿色 */
+        }
+        .custom-option.wolf, .custom-option.wolf-king, .custom-option.wolf-beauty {
+            color: #f44336; /* 红色 */
+        }
+        /* 去除原有的role-select样式，使用新的自定义下拉框 */
+        .game-table .role-select {
+            display: none;
+        }
+        .game-table .seer, .game-table .bear , .game-table .wu , .game-table .shou, .game-table .qishi {
+            color: #4CAF50; /* 深绿色 */
+        }
+        .game-table .wolf, .game-table .wolf-king, .game-table .wolf-beauty {
+            color: #f44336; /* 红色 */
+        }
+        /* 开关按钮样式 */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4CAF50;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #4CAF50;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(0);
+        }
+        input:not(:checked) + .toggle-slider {
+            background-color: #ccc;
+        }
+        input:not(:checked) + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        .alive, .dead {
+            cursor: pointer;
+            display: inline-block;
+            padding: 3px 5px;
+            margin: 0 2px;
+            border-radius: 3px;
+        }
+        .alive {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        .dead {
+            background-color: #ccc;
+            color: #333;
+        }
+        .game-table .dead-row {
+            opacity: 0.5;
+            background-color: #222;
+        }
+        .table-actions {
+            margin-top: 5px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .add-row, .delete-row {
+            padding: 3px 8px;
+            font-size: 12px;
+        }
+        .add-row {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .delete-row {
+            background-color: #f44336;
+            color: white;
         }
         /* 加载指示器样式 */
         #loading {
@@ -126,6 +316,30 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* 去除输入框点击时的高亮 */
+        .game-table select:focus, .game-table input:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #444;
+        }
+        .game-table input.notes-input {
+            width: calc(100% - 8px);
+            height: 100%;
+            border: none;
+            padding: 0 4px;
+            background-color: transparent;
+            caret-color: #d1d1d3; /* 设置光标颜色 */
+            overflow-x: auto;
+        }
+        /* 使备注输入框充满单元格 */
+        .game-table td:nth-child(4) {
+            padding: 0;
+            height: 30px;
+        }
+        .game-table td:nth-child(4) input {
+            height: 100%;
+            min-height: 25px;
+        }
     </style>
 </head>
 <body>
@@ -138,22 +352,26 @@
 
     <div class="player">
         <audio id="audioPlayer" src="assets/audio.mp3" loop style="display:none;"></audio>
-        <div class="role-buttons mb-30">
-            <label for="role" class="font-middle mb-30">选择当前角色:</label>
-            <button id="normalRole" class="role-button font-big">普通角色</button>
-            <button id="sheriffRole" class="role-button font-big">警长</button>
-        </div>
-        <div id="timeInputs mb-30">
-            <div id="normalTimeDiv">
-                <label for="normalTime" class="font-middle">普通角色倒计时时间(秒):</label>
-                <input type="number" id="normalTime" min="1" class="font-big">
+        
+        <div class="role-control-row">
+            <div class="role-buttons">
+                <label for="role" class="font-middle">角色:</label>
+                <button id="normalRole" class="role-button">普通</button>
+                <button id="sheriffRole" class="role-button">警长</button>
             </div>
-            <div id="sheriffTimeDiv">
-                <label for="sheriffTime" class="font-middle">警长倒计时时间(秒):</label>
-                <input type="number" id="sheriffTime" min="1" class="font-big">
+            
+            <div id="timeInputs">
+                <div id="normalTimeDiv">
+                    <label for="normalTime" class="font-middle">倒计时(秒):</label>
+                    <input type="number" id="normalTime" min="1" class="font-big">
+                </div>
+                <div id="sheriffTimeDiv">
+                    <label for="sheriffTime" class="font-middle">警长倒计时(秒):</label>
+                    <input type="number" id="sheriffTime" min="1" class="font-big">
+                </div>
             </div>
         </div>
-        <br>
+        
         <div>
             <button class="font-big" id="playButton">播放</button>
             <button id="startButton" class="font-big">开始倒计时</button>
@@ -161,11 +379,25 @@
 
         <div id="countdown" class="font-big"></div>
         
-        <!-- 新增游戏记录文本框 -->
-        <div class="notes-container">
-            <textarea id="gameNotes">预言家、女巫、熊、守卫、狼王、狼美人、骑士
-
-刀、救、毒、守、魅</textarea>
+        <!-- 新增游戏记录表格 -->
+        <div class="game-table-container">
+            <table class="game-table" id="playerTable">
+                <thead>
+                    <tr>
+                        <th>序</th>
+                        <th>角色</th>
+                        <th>存活</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody id="playerTableBody">
+                    <!-- 表格内容会通过JS动态生成 -->
+                </tbody>
+            </table>
+            <div class="table-actions">
+                <button class="add-row" id="addRowBtn">添加行</button>
+                <button class="delete-row" id="deleteRowBtn">删除行</button>
+            </div>
         </div>
     </div>
  
@@ -239,21 +471,221 @@
         // 开始倒计时按钮事件
         document.getElementById('startButton').addEventListener('click', startTime);
         
-        // // 调整文本框高度以适应窗口
-        // function adjustTextareaHeight() {
-        //     const windowHeight = window.innerHeight;
-        //     const textarea = document.getElementById('gameNotes');
-        //     const textareaTop = textarea.getBoundingClientRect().top;
-        //     const newHeight = windowHeight - textareaTop - 30; // 30px作为底部边距
-        //     textarea.style.height = Math.max(200, newHeight) + 'px';
-        // }
+        // 游戏角色管理表格
+        const roles = [
+            { name: "平民", class: "" },
+            { name: "预言家", class: "seer" },
+            { name: "女巫", class: "wu" },
+            { name: "熊", class: "bear" },
+            { name: "守卫", class: "shou" },
+            { name: "狼", class: "wolf" },
+            { name: "狼王", class: "wolf-king" },
+            { name: "狼美人", class: "wolf-beauty" },
+            { name: "骑士", class: "qishi" },
+            { name: "白痴", class: "" }
+        ];
         
-        // // 在DOM加载和窗口大小改变时调整文本框高度
-        // window.addEventListener('DOMContentLoaded', adjustTextareaHeight);
-        // window.addEventListener('resize', adjustTextareaHeight);
-
-        // 资源加载
+        // 生成角色选择下拉框的HTML
+        function generateRoleSelect(rowIndex) {
+            // 虽然我们隐藏了这个select，但保留它是为了兼容已有的代码和样式应用
+            let hiddenSelectHtml = `<select id="role-${rowIndex}" class="role-select" style="display:none;">`;
+            roles.forEach(role => {
+                hiddenSelectHtml += `<option value="${role.name}" class="${role.class}">${role.name}</option>`;
+            });
+            hiddenSelectHtml += `</select>`;
+            
+            // 创建自定义下拉框
+            let customSelectHtml = `
+                <div class="custom-select-container" data-row="${rowIndex}">
+                    <div class="custom-select-trigger" data-value="平民">平民</div>
+                    <ul class="custom-options" id="options-${rowIndex}">`;
+            
+            roles.forEach(role => {
+                customSelectHtml += `<li class="custom-option ${role.class}" data-value="${role.name}">${role.name}</li>`;
+            });
+            
+            customSelectHtml += `
+                    </ul>
+                </div>
+            `;
+            
+            return hiddenSelectHtml + customSelectHtml;
+        }
+        
+        // 生成表格行
+        function generateTableRow(index) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index}</td>
+                <td>${generateRoleSelect(index)}</td>
+                <td>
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="status-toggle" id="status-${index}" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </td>
+                <td><input type="text" id="notes-${index}" class="notes-input"></td>
+            `;
+            return row;
+        }
+        
+        // 初始化表格
+        function initializeTable() {
+            const tableBody = document.getElementById('playerTableBody');
+            tableBody.innerHTML = ''; // 清空表格
+            
+            // 创建9行初始数据
+            for (let i = 1; i <= 9; i++) {
+                tableBody.appendChild(generateTableRow(i));
+            }
+            
+            // 为所有状态开关添加事件监听
+            setupStatusListeners();
+            // 为所有角色下拉框添加样式
+            setupRoleSelectStyles();
+        }
+        
+        // 设置状态监听器
+        function setupStatusListeners() {
+            document.querySelectorAll('.status-toggle').forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const row = this.closest('tr');
+                    if (!this.checked) {
+                        row.classList.add('dead-row');
+                    } else {
+                        row.classList.remove('dead-row');
+                    }
+                });
+            });
+        }
+        
+        // 设置角色下拉框样式和事件
+        function setupRoleSelectStyles() {
+            // 设置隐藏的原生select，保留以兼容已有代码
+            document.querySelectorAll('.role-select').forEach(select => {
+                applyRoleStyle(select);
+            });
+            
+            // 设置自定义下拉框触发器的点击事件
+            document.querySelectorAll('.custom-select-trigger').forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    closeAllDropdowns();
+                    
+                    const container = this.closest('.custom-select-container');
+                    const options = container.querySelector('.custom-options');
+                    options.classList.toggle('open');
+                });
+            });
+            
+            // 设置自定义选项的点击事件
+            document.querySelectorAll('.custom-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    const container = this.closest('.custom-select-container');
+                    const trigger = container.querySelector('.custom-select-trigger');
+                    const rowIndex = container.getAttribute('data-row');
+                    const select = document.getElementById(`role-${rowIndex}`);
+                    
+                    // 更新触发器显示的文本
+                    trigger.textContent = this.textContent;
+                    trigger.setAttribute('data-value', this.getAttribute('data-value'));
+                    
+                    // 同步更新隐藏的select值
+                    const value = this.getAttribute('data-value');
+                    for (let i = 0; i < select.options.length; i++) {
+                        if (select.options[i].value === value) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    // 应用样式
+                    trigger.className = 'custom-select-trigger';
+                    if (this.classList.contains('seer')) trigger.classList.add('seer');
+                    if (this.classList.contains('bear')) trigger.classList.add('bear');
+                    if (this.classList.contains('wolf')) trigger.classList.add('wolf');
+                    if (this.classList.contains('wolf-king')) trigger.classList.add('wolf-king');
+                    if (this.classList.contains('wolf-beauty')) trigger.classList.add('wolf-beauty');
+                    if (this.classList.contains('wu')) trigger.classList.add('wu');
+                    if (this.classList.contains('shou')) trigger.classList.add('shou');
+                    if (this.classList.contains('qishi')) trigger.classList.add('qishi');
+                    
+                    // 执行原有的select的change事件
+                    const event = new Event('change');
+                    select.dispatchEvent(event);
+                    
+                    // 关闭下拉框
+                    closeAllDropdowns();
+                });
+            });
+            
+            // 点击页面其他地方关闭所有下拉框
+            document.addEventListener('click', closeAllDropdowns);
+        }
+        
+        // 关闭所有下拉框
+        function closeAllDropdowns() {
+            document.querySelectorAll('.custom-options').forEach(dropdown => {
+                dropdown.classList.remove('open');
+            });
+        }
+        
+        // 应用角色样式
+        function applyRoleStyle(select) {
+            // 移除所有可能的类
+            select.classList.remove('seer', 'bear', 'wolf', 'wolf-king', 'wolf-beauty', 'wu','shou', 'qishi');
+            
+            // 获取选中的选项
+            const selectedOption = select.options[select.selectedIndex];
+            
+            // 如果选项有特定的类，则将其应用到select元素
+            if (selectedOption.classList.contains('seer')) {
+                select.classList.add('seer');
+            } else if (selectedOption.classList.contains('bear')) {
+                select.classList.add('bear');
+            } else if (selectedOption.classList.contains('wolf')) {
+                select.classList.add('wolf');
+            } else if (selectedOption.classList.contains('wolf-king')) {
+                select.classList.add('wolf-king');
+            } else if (selectedOption.classList.contains('wolf-beauty')) {
+                select.classList.add('wolf-beauty');
+            } else if (selectedOption.classList.contains('wu')) {
+                select.classList.add('wu');
+            } else if (selectedOption.classList.contains('shou')) {
+                select.classList.add('shou');
+            } else if (selectedOption.classList.contains('qishi')) {
+                select.classList.add('qishi');
+            }
+        }
+        
+        // 添加行按钮事件
+        document.getElementById('addRowBtn').addEventListener('click', function() {
+            const tableBody = document.getElementById('playerTableBody');
+            const newIndex = tableBody.rows.length + 1;
+            tableBody.appendChild(generateTableRow(newIndex));
+            
+            // 为新添加的行设置监听器和样式
+            setupStatusListeners();
+            setupRoleSelectStyles();
+        });
+        
+        // 删除行按钮事件
+        document.getElementById('deleteRowBtn').addEventListener('click', function() {
+            const tableBody = document.getElementById('playerTableBody');
+            if (tableBody.rows.length > 1) {
+                tableBody.removeChild(tableBody.lastChild);
+            } else {
+                alert('表格至少需要保留一行！');
+            }
+        });
+        
+        // 初始化表格
         window.addEventListener('DOMContentLoaded', function() {
+            initializeTable();
+            
+            // 资源加载
             let totalResources = 1; // 只有音频需要加载
             let loadedResources = 0;
             
