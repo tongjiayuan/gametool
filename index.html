@@ -53,7 +53,9 @@
         }
         #countdown {
             font-size: 30px;
-            margin-top: 8px;
+            display: inline-block;
+            margin-left: 5px;
+            width: 100px;
         }
         .role-control-row {
             display: flex;
@@ -340,6 +342,11 @@
             height: 100%;
             min-height: 25px;
         }
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -372,12 +379,13 @@
             </div>
         </div>
         
-        <div>
+        <div class="flex-container">
             <button class="font-big" id="playButton">播放</button>
             <button id="startButton" class="font-big">开始倒计时</button>
+            <div id="countdown" class="font-big"></div>
         </div>
 
-        <div id="countdown" class="font-big"></div>
+        
         
         <!-- 新增游戏记录表格 -->
         <div class="game-table-container">
