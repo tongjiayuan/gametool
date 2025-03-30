@@ -144,7 +144,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: calc(100% - 8px);
+            width: calc(100% - 6px);
             background-color: #2a2a2a;
             color: #d1d1d3;
             padding: 2px;
@@ -192,7 +192,7 @@
         .custom-option:hover {
             background-color: #3a3a3a;
         }
-        .custom-option.seer, .custom-option.bear, .custom-option.wu, .custom-option.shou, .custom-option.qishi {
+        .custom-option.seer, .custom-option.bear, .custom-option.wu, .custom-option.shou, .custom-option.qishi, .custom-option.lieren {
             color: #4CAF50; /* 深绿色 */
         }
         .custom-option.wolf, .custom-option.wolf-king, .custom-option.wolf-beauty {
@@ -202,7 +202,7 @@
         .game-table .role-select {
             display: none;
         }
-        .game-table .seer, .game-table .bear , .game-table .wu , .game-table .shou, .game-table .qishi {
+        .game-table .seer, .game-table .bear , .game-table .wu , .game-table .shou, .game-table .qishi, .game-table .lieren {
             color: #4CAF50; /* 深绿色 */
         }
         .game-table .wolf, .game-table .wolf-king, .game-table .wolf-beauty {
@@ -347,9 +347,6 @@
             justify-content: center;
             align-items: center;
         }
-        .active-select-trigger {
-            border: 1px solid orange;
-        }
     </style>
 </head>
 <body>
@@ -416,6 +413,7 @@
         document.getElementById('playButton').addEventListener('click', function() {
             const audioPlayer = document.getElementById('audioPlayer');
             if (audioPlayer.paused) {
+                audioPlayer.currentTime = 0; // 重置到开头
                 audioPlayer.play();
                 this.textContent = '暂停';
             } else {
@@ -489,6 +487,7 @@
             { name: "女巫", class: "wu" },
             { name: "熊", class: "bear" },
             { name: "守卫", class: "shou" },
+            { name: "猎人", class: "lieren" },
             { name: "狼", class: "wolf" },
             { name: "狼王", class: "wolf-king" },
             { name: "狼美人", class: "wolf-beauty" },
@@ -582,7 +581,7 @@
                 trigger.addEventListener('click', function(e) {
                     e.stopPropagation();
                     closeAllDropdowns();
-                    trigger.classList.toggle('active-select-trigger');
+                    
                     const container = this.closest('.custom-select-container');
                     const options = container.querySelector('.custom-options');
                     options.classList.toggle('open');
@@ -621,6 +620,7 @@
                     if (this.classList.contains('wolf-beauty')) trigger.classList.add('wolf-beauty');
                     if (this.classList.contains('wu')) trigger.classList.add('wu');
                     if (this.classList.contains('shou')) trigger.classList.add('shou');
+                    if (this.classList.contains('lieren')) trigger.classList.add('lieren');
                     if (this.classList.contains('qishi')) trigger.classList.add('qishi');
                     
                     // 执行原有的select的change事件
@@ -641,15 +641,12 @@
             document.querySelectorAll('.custom-options').forEach(dropdown => {
                 dropdown.classList.remove('open');
             });
-            document.querySelectorAll('.custom-select-trigger').forEach(dropdown => {
-                dropdown.classList.remove('active-select-trigger');
-            });
         }
         
         // 应用角色样式
         function applyRoleStyle(select) {
             // 移除所有可能的类
-            select.classList.remove('seer', 'bear', 'wolf', 'wolf-king', 'wolf-beauty', 'wu','shou', 'qishi');
+            select.classList.remove('seer', 'bear', 'wolf', 'wolf-king', 'wolf-beauty', 'wu','shou', 'qishi', 'lieren');
             
             // 获取选中的选项
             const selectedOption = select.options[select.selectedIndex];
@@ -671,6 +668,8 @@
                 select.classList.add('shou');
             } else if (selectedOption.classList.contains('qishi')) {
                 select.classList.add('qishi');
+            } else if (selectedOption.classList.contains('lieren')) {
+                select.classList.add('lieren');
             }
         }
         
