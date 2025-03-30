@@ -144,7 +144,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: calc(100% - 6px);
+            width: calc(100% - 8px);
             background-color: #2a2a2a;
             color: #d1d1d3;
             padding: 2px;
@@ -346,6 +346,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .active-select-trigger {
+            border: 1px solid orange;
         }
     </style>
 </head>
@@ -581,7 +584,7 @@
                 trigger.addEventListener('click', function(e) {
                     e.stopPropagation();
                     closeAllDropdowns();
-                    
+                    trigger.classList.toggle('active-select-trigger');
                     const container = this.closest('.custom-select-container');
                     const options = container.querySelector('.custom-options');
                     options.classList.toggle('open');
@@ -640,6 +643,9 @@
         function closeAllDropdowns() {
             document.querySelectorAll('.custom-options').forEach(dropdown => {
                 dropdown.classList.remove('open');
+            });
+            document.querySelectorAll('.custom-select-trigger').forEach(dropdown => {
+                dropdown.classList.remove('active-select-trigger');
             });
         }
         
